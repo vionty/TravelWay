@@ -414,6 +414,21 @@ textarea {
     margin-bottom: 8px;
 }
 
+/* Чекбокс "Посещено" */
+
+.form-container input[type="checkbox"] {
+    width: auto;
+    margin: 0 8px 0 0;
+    padding: 0;
+    vertical-align: middle;
+}
+
+.form-container label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
 /* Адаптация под телефон */
 
 @media (max-width: 700px) {
