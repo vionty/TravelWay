@@ -1,0 +1,162 @@
+```html
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>{{ title }} – TravelWay</title>
+
+    <link rel="stylesheet" href="{% static 'planner/style.css' %}">
+</head>
+
+<body>
+
+<header>
+
+    <div class="container">
+
+        <a href="{% url 'home' %}" class="logo">
+            ✈️ TravelWay
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <div class="form-container">
+
+        <h1>{{ title }}</h1>
+
+        <p>
+            Поездка:
+            <strong>{{ trip.title }}</strong>
+        </p>
+
+        <p>
+            Направление:
+            <strong>
+                {{ destination.country }}, {{ destination.city }}
+            </strong>
+        </p>
+
+
+        {% if form.non_field_errors %}
+
+            <div class="error-message">
+
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+
+            <!-- Название места -->
+
+            <p>
+
+                <label for="{{ form.name.id_for_label }}">
+                    Название места
+                </label>
+
+                {{ form.name }}
+
+                {% if form.name.errors %}
+
+                    <div class="error-message">
+                        {{ form.name.errors }}
+                    </div>
+
+                {% endif %}
+
+            </p>
+
+
+            <!-- Описание -->
+
+            <p>
+
+                <label for="{{ form.description.id_for_label }}">
+                    Описание
+                </label>
+
+                {{ form.description }}
+
+                {% if form.description.errors %}
+
+                    <div class="error-message">
+                        {{ form.description.errors }}
+                    </div>
+
+                {% endif %}
+
+            </p>
+
+
+            <!-- Адрес -->
+
+            <p>
+
+                <label for="{{ form.address.id_for_label }}">
+                    Адрес
+                </label>
+
+                {{ form.address }}
+
+                {% if form.address.errors %}
+
+                    <div class="error-message">
+                        {{ form.address.errors }}
+                    </div>
+
+                {% endif %}
+
+            </p>
+
+
+            <!-- Посещение -->
+
+            <p>
+
+                <label>
+                    {{ form.visited }}
+                    Посещено
+                </label>
+
+            </p>
+
+
+            <button type="submit" class="btn">
+                Сохранить
+            </button>
+
+
+            <a
+                href="{% url 'trip_detail' trip.id %}"
+                class="btn btn-secondary"
+            >
+                Отмена
+            </a>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+
+</html>

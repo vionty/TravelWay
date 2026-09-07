@@ -1,0 +1,73 @@
+```html
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Удаление поездки – TravelWay</title>
+
+    <link rel="stylesheet" href="{% static 'planner/style.css' %}">
+</head>
+
+<body>
+
+<header>
+
+    <div class="container">
+
+        <a href="{% url 'home' %}" class="logo">
+            ✈️ TravelWay
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <div class="form-container">
+
+        <h1>Удаление поездки</h1>
+
+
+        <p>
+            Ты действительно хочешь удалить поездку
+            <strong>«{{ trip.title }}»</strong>?
+        </p>
+
+
+        <p>
+            Вместе с поездкой будут удалены все связанные
+            направления и места для посещения.
+        </p>
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <button type="submit" class="btn btn-danger">
+                Удалить
+            </button>
+
+
+            <a
+                href="{% url 'trip_detail' trip.id %}"
+                class="btn btn-secondary"
+            >
+                Отмена
+            </a>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+```html
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>{{ title }} – TravelWay</title>
+
+    <link rel="stylesheet" href="{% static 'planner/style.css' %}">
+</head>
+
+<body>
+
+<header>
+
+    <div class="container">
+
+        <a href="{% url 'home' %}" class="logo">
+            ✈️ TravelWay
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <div class="form-container">
+
+        <h1>{{ title }}</h1>
+
+        <p>
+            Поездка: <strong>{{ trip.title }}</strong>
+        </p>
+
+
+        {% if form.non_field_errors %}
+
+            <div class="error-message">
+
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+
+            <!-- Страна -->
+
+            <p>
+                <label for="{{ form.country.id_for_label }}">
+                    Страна
+                </label>
+
+                {{ form.country }}
+
+                {% if form.country.errors %}
+
+                    <div class="error-message">
+                        {{ form.country.errors }}
+                    </div>
+
+                {% endif %}
+
+            </p>
+
+
+            <!-- Город -->
+
+            <p>
+                <label for="{{ form.city.id_for_label }}">
+                    Город
+                </label>
+
+                {{ form.city }}
+
+                {% if form.city.errors %}
+
+                    <div class="error-message">
+                        {{ form.city.errors }}
+                    </div>
+
+                {% endif %}
+
+            </p>
+
+
+            <button type="submit" class="btn">
+                Сохранить
+            </button>
+
+
+            <a
+                href="{% url 'trip_detail' trip.id %}"
+                class="btn btn-secondary"
+            >
+                Отмена
+            </a>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+```html
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Вход – TravelWay</title>
+
+    <link rel="stylesheet" href="{% static 'planner/style.css' %}">
+</head>
+
+<body>
+
+<header>
+
+    <div class="container">
+
+        <a href="{% url 'home' %}" class="logo">
+            ✈️ TravelWay
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <div class="form-container">
+
+        <h1>Вход</h1>
+
+        <p>
+            Войди в аккаунт, чтобы продолжить планирование путешествий.
+        </p>
+
+
+        {% if form.non_field_errors %}
+
+            <div class="error-message">
+
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+
+            <p>
+
+                <label for="{{ form.username.id_for_label }}">
+                    Имя пользователя
+                </label>
+
+                {{ form.username }}
+
+                {% if form.username.errors %}
+
+                    <div class="error-message">
+                        {{ form.username.errors }}
+                    </div>
+
+                {% endif %}
+
+            </p>
+
+
+            <p>
+
+                <label for="{{ form.password.id_for_label }}">
+                    Пароль
+                </label>
+
+                {{ form.password }}
+
+                {% if form.password.errors %}
+
+                    <div class="error-message">
+                        {{ form.password.errors }}
+                    </div>
+
+                {% endif %}
+
+            </p>
+
+
+            <button type="submit" class="btn">
+                Войти
+            </button>
+
+
+            <a
+                href="{% url 'register' %}"
+                class="btn btn-secondary"
+            >
+                Создать аккаунт
+            </a>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+
+</html>

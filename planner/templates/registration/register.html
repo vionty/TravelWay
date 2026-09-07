@@ -1,0 +1,136 @@
+```html
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Регистрация – TravelWay</title>
+
+    <link rel="stylesheet" href="{% static 'planner/style.css' %}">
+</head>
+
+<body>
+
+<header>
+
+    <div class="container">
+
+        <a href="{% url 'home' %}" class="logo">
+            ✈️ TravelWay
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <div class="form-container">
+
+        <h1>Регистрация</h1>
+
+        <p>
+            Создай аккаунт, чтобы начать планировать путешествия.
+        </p>
+
+
+        {% if form.non_field_errors %}
+
+            <div class="error-message">
+
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+
+            <p>
+
+                <label for="{{ form.username.id_for_label }}">
+                    Имя пользователя
+                </label>
+
+                {{ form.username }}
+
+                {% if form.username.errors %}
+
+                    <div class="error-message">
+                        {{ form.username.errors }}
+                    </div>
+
+                {% endif %}
+
+            </p>
+
+
+            <p>
+
+                <label for="{{ form.password1.id_for_label }}">
+                    Пароль
+                </label>
+
+                {{ form.password1 }}
+
+                {% if form.password1.errors %}
+
+                    <div class="error-message">
+                        {{ form.password1.errors }}
+                    </div>
+
+                {% endif %}
+
+            </p>
+
+
+            <p>
+
+                <label for="{{ form.password2.id_for_label }}">
+                    Подтверждение пароля
+                </label>
+
+                {{ form.password2 }}
+
+                {% if form.password2.errors %}
+
+                    <div class="error-message">
+                        {{ form.password2.errors }}
+                    </div>
+
+                {% endif %}
+
+            </p>
+
+
+            <button type="submit" class="btn">
+                Зарегистрироваться
+            </button>
+
+
+            <a
+                href="{% url 'login' %}"
+                class="btn btn-secondary"
+            >
+                Уже есть аккаунт
+            </a>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+
+</html>

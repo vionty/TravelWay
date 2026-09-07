@@ -1,0 +1,456 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fffaf7;
+    color: #3d3430;
+}
+
+
+/* Контейнер */
+
+.container {
+    width: 90%;
+    max-width: 1150px;
+    margin: 0 auto;
+}
+
+
+/* Шапка */
+
+header {
+    background: #ffffff;
+    padding: 20px 0;
+    border-bottom: 1px solid #f5ded2;
+    box-shadow: 0 2px 10px rgba(190, 130, 105, 0.05);
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #e89a78;
+    text-decoration: none;
+}
+
+.logo:hover {
+    color: #d98261;
+}
+
+
+/* Приветствие */
+
+.welcome {
+    padding: 35px 0 20px;
+}
+
+.welcome h1 {
+    font-size: 36px;
+    margin: 0 0 10px;
+    color: #3d3430;
+}
+
+.welcome p {
+    color: #796e68;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+
+/* Кнопки */
+
+.btn {
+    display: inline-block;
+    padding: 11px 18px;
+    margin-top: 5px;
+    border-radius: 10px;
+    background: #f3a27f;
+    color: #ffffff;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background: #e58f6b;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: #fff0e9;
+    color: #d98261;
+}
+
+.btn-secondary:hover {
+    background: #ffe4d8;
+    color: #c66f50;
+}
+
+.btn-danger {
+    background: #e58b7b;
+    color: #ffffff;
+}
+
+.btn-danger:hover {
+    background: #d97767;
+    color: #ffffff;
+}
+
+
+/* Поиск и фильтрация */
+
+.search-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 25px 0 30px;
+    padding: 18px;
+    background: #ffffff;
+    border: 1px solid #f5ded2;
+    border-radius: 16px;
+}
+
+.search-form input,
+.search-form select {
+    padding: 12px 15px;
+    border: 1px solid #efd9cf;
+    border-radius: 10px;
+    font-size: 14px;
+    background: #ffffff;
+    color: #4b403b;
+}
+
+.search-form input {
+    flex: 1;
+    min-width: 250px;
+}
+
+.search-form select {
+    min-width: 170px;
+}
+
+.search-form input:focus,
+.search-form select:focus {
+    outline: none;
+    border-color: #f3a27f;
+    box-shadow: 0 0 0 3px rgba(243, 162, 127, 0.12);
+}
+
+
+/* Заголовки */
+
+h2 {
+    color: #3d3430;
+    margin-top: 35px;
+    margin-bottom: 20px;
+}
+
+
+/* Карточки поездок и направлений */
+
+.trip-card {
+    position: relative;
+    background: #ffffff;
+    padding: 0;
+    margin: 22px 0;
+    border-radius: 20px;
+    border: 1px solid #f5ded2;
+    box-shadow: 0 8px 25px rgba(190, 130, 105, 0.09);
+    overflow: hidden;
+}
+
+
+/* Анимация только для карточек поездок */
+
+.trip-card:hover {
+    box-shadow: 0 12px 30px rgba(190, 130, 105, 0.13);
+}
+
+
+/* Персиковая верхняя часть карточки */
+
+.trip-card::before {
+    content: "✈️";
+    display: block;
+    height: 75px;
+    padding: 18px 25px;
+    background: linear-gradient(
+        135deg,
+        #fff0e9,
+        #ffe4d8
+    );
+    font-size: 30px;
+}
+
+
+/* Заголовок карточки */
+
+.trip-card h3 {
+    margin: 0;
+    padding: 22px 25px 8px;
+    font-size: 24px;
+    color: #d98261;
+}
+
+
+/* Информация внутри карточки */
+
+.trip-card p {
+    color: #6f635d;
+    margin: 9px 25px;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+
+/* Кнопки карточки */
+
+.trip-card > .card-actions {
+    margin: 20px 25px 25px;
+}
+
+
+/* Общие действия */
+
+.card-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+
+/* Пустое состояние */
+
+.empty-message {
+    background: #ffffff;
+    padding: 35px;
+    margin-top: 20px;
+    border-radius: 18px;
+    border: 1px solid #f5ded2;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(190, 130, 105, 0.07);
+}
+
+.empty-message h3 {
+    color: #d98261;
+    font-size: 22px;
+}
+
+.empty-message p {
+    color: #796e68;
+    margin-bottom: 20px;
+}
+
+
+/* Формы */
+
+.form-container {
+    background: #ffffff;
+    max-width: 650px;
+    margin: 50px auto;
+    padding: 35px;
+    border-radius: 18px;
+    border: 1px solid #f5ded2;
+    box-shadow: 0 6px 20px rgba(190, 130, 105, 0.08);
+}
+
+.form-container h1,
+.form-container h2 {
+    color: #3d3430;
+}
+
+.form-container input,
+.form-container select,
+.form-container textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    border: 1px solid #efd9cf;
+    border-radius: 9px;
+    background: #fffdfc;
+    color: #4b403b;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.form-container textarea {
+    resize: vertical;
+}
+
+.form-container input:focus,
+.form-container select:focus,
+.form-container textarea:focus {
+    outline: none;
+    border-color: #f3a27f;
+    box-shadow: 0 0 0 3px rgba(243, 162, 127, 0.10);
+}
+
+
+/* Ошибки */
+
+.error-message {
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    background: #fff0ed;
+    color: #c76556;
+    border: 1px solid #f4d1ca;
+}
+
+.errorlist {
+    padding: 10px 14px;
+    margin: 8px 0;
+    list-style: none;
+    background: #fff0ed;
+    color: #c76556;
+    border-radius: 10px;
+    border: 1px solid #f4d1ca;
+}
+
+
+/* Карточки мест */
+
+.place-card {
+    background: #fffaf7;
+    padding: 20px;
+    margin: 18px 25px 12px;
+    border-radius: 14px;
+    border: 1px solid #f5ded2;
+    box-shadow: none;
+}
+
+
+/* Каждое следующее место */
+
+.place-card + .place-card {
+    margin-top: 12px;
+}
+
+
+/* Заголовок места */
+
+.place-card h3 {
+    color: #d98261;
+    margin: 0 0 12px;
+    padding: 0;
+    font-size: 19px;
+}
+
+
+/* Текст места */
+
+.place-card p {
+    color: #6f635d;
+    line-height: 1.5;
+    margin: 8px 0;
+}
+
+
+/* Форма отметки посещения */
+
+.place-card form {
+    margin-top: 14px;
+}
+
+
+/* Кнопки внутри места */
+
+.place-card .card-actions {
+    margin-top: 14px;
+}
+
+
+/* Разделитель */
+
+hr {
+    border: none;
+    border-top: 1px solid #f5ded2;
+    margin: 25px 0;
+}
+
+
+/* Ссылки */
+
+a {
+    color: #d98261;
+}
+
+a:hover {
+    color: #c66f50;
+}
+
+
+/* Обычные формы */
+
+form {
+    margin-top: 15px;
+}
+
+
+/* Поля Django forms */
+
+label {
+    color: #4b403b;
+    font-weight: 600;
+}
+
+input,
+select,
+textarea {
+    font-family: Arial, sans-serif;
+}
+
+/* Кнопка добавления места внутри направления */
+
+.trip-card > .btn {
+    margin-left: 25px;
+    margin-bottom: 8px;
+}
+
+/* Адаптация под телефон */
+
+@media (max-width: 700px) {
+
+    .container {
+        width: 92%;
+    }
+
+    .welcome h1 {
+        font-size: 28px;
+    }
+
+    .search-form {
+        flex-direction: column;
+    }
+
+    .search-form input,
+    .search-form select {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .trip-card h3 {
+        font-size: 21px;
+    }
+
+    .place-card {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    .card-actions {
+        flex-direction: column;
+    }
+
+    .card-actions .btn {
+        width: 100%;
+        text-align: center;
+    }
+}

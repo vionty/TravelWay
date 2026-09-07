@@ -1,0 +1,287 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>{{ trip.title }} – TravelWay</title>
+
+    <link rel="stylesheet" href="{% static 'planner/style.css' %}">
+</head>
+
+<body>
+
+<header>
+
+    <div class="container">
+
+        <a href="{% url 'home' %}" class="logo">
+            ✈️ TravelWay
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <!-- Информация о поездке -->
+
+    <div class="welcome">
+
+        <a href="{% url 'home' %}">
+            ← Все поездки
+        </a>
+
+        <h1>{{ trip.title }}</h1>
+
+
+        <p>
+            📅 {{ trip.start_date }}
+            –
+            {{ trip.end_date }}
+        </p>
+
+
+        <p>
+            🏷️ Статус:
+            {{ trip.get_status_display }}
+        </p>
+
+
+        {% if trip.budget %}
+
+            <p>
+                💰 Бюджет: {{ trip.budget }}
+            </p>
+
+        {% endif %}
+
+
+        {% if trip.notes %}
+
+            <h3>📝 Заметки</h3>
+
+            <p>
+                {{ trip.notes }}
+            </p>
+
+        {% endif %}
+
+
+        <div class="card-actions">
+
+            <a
+                href="{% url 'trip_edit' trip.id %}"
+                class="btn"
+            >
+                ✏️ Редактировать
+            </a>
+
+
+            <a
+                href="{% url 'trip_delete' trip.id %}"
+                class="btn btn-danger"
+            >
+                🗑️ Удалить
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Направления -->
+
+    <h2>🌍 Направления</h2>
+
+
+    <a
+        href="{% url 'destination_create' trip.id %}"
+        class="btn"
+    >
+        + Добавить направление
+    </a>
+
+
+    <br>
+    <br>
+
+
+    {% for destination in trip.destinations.all %}
+
+        <div class="trip-card">
+
+            <h3>
+                🌍 {{ destination.country }}, {{ destination.city }}
+            </h3>
+
+
+            <div class="card-actions">
+
+                <a
+                    href="{% url 'destination_edit' destination.id %}"
+                    class="btn btn-secondary"
+                >
+                    ✏️ Изменить
+                </a>
+
+
+                <a
+                    href="{% url 'destination_delete' destination.id %}"
+                    class="btn btn-danger"
+                >
+                    🗑️ Удалить
+                </a>
+
+            </div>
+
+
+            <h3>
+                📍 Места для посещения
+            </h3>
+
+
+            <a
+                href="{% url 'place_create' destination.id %}"
+                class="btn"
+            >
+                + Добавить место
+            </a>
+
+
+            {% for place in destination.places.all %}
+
+                <div class="place-card">
+
+                    <h3>
+                        {{ place.name }}
+                    </h3>
+
+
+                    {% if place.address %}
+
+                        <p>
+                            📍 {{ place.address }}
+                        </p>
+
+                    {% endif %}
+
+
+                    {% if place.description %}
+
+                        <p>
+                            {{ place.description }}
+                        </p>
+
+                    {% endif %}
+
+
+                    {% if place.visited %}
+
+                        <p>
+                            ✅ Посещено
+                        </p>
+
+                    {% else %}
+
+                        <p>
+                            ⬜ Не посещено
+                        </p>
+
+                    {% endif %}
+
+
+                    <form
+                        method="post"
+                        action="{% url 'place_toggle_visited' place.id %}"
+                    >
+
+                        {% csrf_token %}
+
+                        <button type="submit" class="btn">
+
+                            {% if place.visited %}
+                                Отметить как не посещённое
+                            {% else %}
+                                Отметить как посещённое
+                            {% endif %}
+
+                        </button>
+
+                    </form>
+
+
+                    <div class="card-actions">
+
+                        <a
+                            href="{% url 'place_edit' place.id %}"
+                            class="btn btn-secondary"
+                        >
+                            ✏️ Изменить
+                        </a>
+
+
+                        <a
+                            href="{% url 'place_delete' place.id %}"
+                            class="btn btn-danger"
+                        >
+                            🗑️ Удалить
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <div class="empty-message">
+
+                    <p>
+                        В этом направлении пока нет мест.
+                    </p>
+
+                    <a
+                        href="{% url 'place_create' destination.id %}"
+                        class="btn"
+                    >
+                        Добавить первое место
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+    {% empty %}
+
+        <div class="empty-message">
+
+            <h3>Пока нет направлений 🌍</h3>
+
+            <p>
+                Добавь страны и города,
+                которые хочешь посетить.
+            </p>
+
+            <a
+                href="{% url 'destination_create' trip.id %}"
+                class="btn"
+            >
+                Добавить первое направление
+            </a>
+
+        </div>
+
+    {% endfor %}
+
+
+</main>
+
+</body>
+</html>

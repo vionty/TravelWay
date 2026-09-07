@@ -1,0 +1,75 @@
+```html
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Удаление места – TravelWay</title>
+
+    <link rel="stylesheet" href="{% static 'planner/style.css' %}">
+</head>
+
+<body>
+
+<header>
+
+    <div class="container">
+
+        <a href="{% url 'home' %}" class="logo">
+            ✈️ TravelWay
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <div class="form-container">
+
+        <h1>Удаление места</h1>
+
+        <p>
+            Ты действительно хочешь удалить место
+            <strong>«{{ place.name }}»</strong>?
+        </p>
+
+
+        <p>
+            Направление:
+            <strong>
+                {{ place.destination.country }},
+                {{ place.destination.city }}
+            </strong>
+        </p>
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <button type="submit" class="btn btn-danger">
+                Удалить
+            </button>
+
+
+            <a
+                href="{% url 'trip_detail' place.destination.trip.id %}"
+                class="btn btn-secondary"
+            >
+                Отмена
+            </a>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+
+</html>

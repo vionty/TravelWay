@@ -1,0 +1,201 @@
+```html
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>{{ title }} – TravelWay</title>
+
+    <link rel="stylesheet" href="{% static 'planner/style.css' %}">
+</head>
+
+<body>
+
+<header>
+
+    <div class="container">
+
+        <a href="{% url 'home' %}" class="logo">
+            ✈️ TravelWay
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <div class="form-container">
+
+        <h1>{{ title }}</h1>
+
+
+        {% if form.non_field_errors %}
+
+            <div class="error-message">
+
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+
+            <!-- Название -->
+
+            <p>
+
+                <label for="{{ form.title.id_for_label }}">
+                    Название поездки
+                </label>
+
+                {{ form.title }}
+
+                {% if form.title.errors %}
+
+                    <div class="error-message">
+                        {{ form.title.errors }}
+                    </div>
+
+                {% endif %}
+
+            </p>
+
+
+            <!-- Дата начала -->
+
+            <p>
+
+                <label for="{{ form.start_date.id_for_label }}">
+                    Дата начала
+                </label>
+
+                {{ form.start_date }}
+
+                {% if form.start_date.errors %}
+
+                    <div class="error-message">
+                        {{ form.start_date.errors }}
+                    </div>
+
+                {% endif %}
+
+            </p>
+
+
+            <!-- Дата окончания -->
+
+            <p>
+
+                <label for="{{ form.end_date.id_for_label }}">
+                    Дата окончания
+                </label>
+
+                {{ form.end_date }}
+
+                {% if form.end_date.errors %}
+
+                    <div class="error-message">
+                        {{ form.end_date.errors }}
+                    </div>
+
+                {% endif %}
+
+            </p>
+
+
+            <!-- Бюджет -->
+
+            <p>
+
+                <label for="{{ form.budget.id_for_label }}">
+                    Бюджет
+                </label>
+
+                {{ form.budget }}
+
+                {% if form.budget.errors %}
+
+                    <div class="error-message">
+                        {{ form.budget.errors }}
+                    </div>
+
+                {% endif %}
+
+            </p>
+
+
+            <!-- Статус -->
+
+            <p>
+
+                <label for="{{ form.status.id_for_label }}">
+                    Статус поездки
+                </label>
+
+                {{ form.status }}
+
+                {% if form.status.errors %}
+
+                    <div class="error-message">
+                        {{ form.status.errors }}
+                    </div>
+
+                {% endif %}
+
+            </p>
+
+
+            <!-- Заметки -->
+
+            <p>
+
+                <label for="{{ form.notes.id_for_label }}">
+                    Заметки
+                </label>
+
+                {{ form.notes }}
+
+                {% if form.notes.errors %}
+
+                    <div class="error-message">
+                        {{ form.notes.errors }}
+                    </div>
+
+                {% endif %}
+
+            </p>
+
+
+            <button type="submit" class="btn">
+                Сохранить
+            </button>
+
+
+            <a
+                href="{% url 'home' %}"
+                class="btn btn-secondary"
+            >
+                Отмена
+            </a>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+
+</html>
