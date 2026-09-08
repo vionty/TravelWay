@@ -1,6 +1,31 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 from .models import Trip, Destination, Place
+
+
+class RegistrationForm(UserCreationForm):
+    email = forms.EmailField(
+        required=True,
+        label='Электронная почта'
+    )
+
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'email',
+            'password1',
+            'password2',
+        ]
+
+
+class PasswordResetUsernameForm(forms.Form):
+    username = forms.CharField(
+        label='Имя пользователя',
+        max_length=150
+    )
 
 
 class TripForm(forms.ModelForm):
@@ -26,15 +51,28 @@ class TripForm(forms.ModelForm):
 
         widgets = {
             'start_date': forms.DateInput(
+                format='%Y-%m-%d',
                 attrs={'type': 'date'}
             ),
             'end_date': forms.DateInput(
+                format='%Y-%m-%d',
                 attrs={'type': 'date'}
             ),
             'notes': forms.Textarea(
                 attrs={'rows': 4}
             ),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['start_date'].input_formats = [
+            '%Y-%m-%d'
+        ]
+
+        self.fields['end_date'].input_formats = [
+            '%Y-%m-%d'
+        ]
 
     def clean(self):
         cleaned_data = super().clean()

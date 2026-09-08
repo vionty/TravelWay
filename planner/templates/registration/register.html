@@ -1,4 +1,3 @@
-```html
 {% load static %}
 
 <!DOCTYPE html>
@@ -68,6 +67,25 @@
 
                     <div class="error-message">
                         {{ form.username.errors }}
+                    </div>
+
+                {% endif %}
+
+            </p>
+
+
+            <p>
+
+                <label for="{{ form.email.id_for_label }}">
+                    Электронная почта
+                </label>
+
+                {{ form.email }}
+
+                {% if form.email.errors %}
+
+                    <div class="error-message">
+                        {{ form.email.errors }}
                     </div>
 
                 {% endif %}

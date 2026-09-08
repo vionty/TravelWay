@@ -1,10 +1,22 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail
 from django.db.models import Q, Count
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
+from django.urls import reverse
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 
-from .forms import TripForm, DestinationForm, PlaceForm
+from .forms import (
+    RegistrationForm,
+    PasswordResetUsernameForm,
+    TripForm,
+    DestinationForm,
+    PlaceForm
+)
 from .models import Trip, Destination, Place
 
 
@@ -47,18 +59,85 @@ def home(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegistrationForm(request.POST)
 
         if form.is_valid():
             user = form.save()
             login(request, user)
+
             return redirect('home')
     else:
-        form = UserCreationForm()
+        form = RegistrationForm()
 
     return render(request, 'registration/register.html', {
         'form': form
     })
+
+
+def password_reset(request):
+    if request.method == 'POST':
+        form = PasswordResetUsernameForm(request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data['username']
+
+            try:
+                user = User.objects.get(
+                    username=username
+                )
+            except User.DoesNotExist:
+                user = None
+
+            if user and user.email:
+                uid = urlsafe_base64_encode(
+                    force_bytes(user.pk)
+                )
+
+                token = default_token_generator.make_token(
+                    user
+                )
+
+                reset_url = request.build_absolute_uri(
+                    reverse(
+                        'password_reset_confirm',
+                        kwargs={
+                            'uidb64': uid,
+                            'token': token
+                        }
+                    )
+                )
+
+                send_mail(
+                    subject='Восстановление пароля – TravelWay',
+                    message=(
+                        'Здравствуйте!\n\n'
+                        'Вы запросили восстановление пароля '
+                        'для аккаунта TravelWay.\n\n'
+                        'Перейдите по ссылке, чтобы установить '
+                        'новый пароль:\n\n'
+                        f'{reset_url}\n\n'
+                        'Если вы не запрашивали восстановление '
+                        'пароля, просто проигнорируйте это письмо.'
+                    ),
+                    from_email='noreply@travelway.local',
+                    recipient_list=[user.email],
+                    fail_silently=False
+                )
+
+            return redirect(
+                'password_reset_done'
+            )
+
+    else:
+        form = PasswordResetUsernameForm()
+
+    return render(
+        request,
+        'registration/password_reset.html',
+        {
+            'form': form
+        }
+    )
 
 
 @login_required

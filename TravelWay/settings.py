@@ -15,11 +15,8 @@ import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 
 # Secret key
@@ -153,11 +150,24 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MAILERS = {
     'default': {
-        'BACKEND': (
-            'django.core.mail.backends.console.EmailBackend'
-        ),
-    },
+        'BACKEND': 'django.core.mail.backends.smtp.EmailBackend',
+        'OPTIONS': {
+            'host': 'smtp.gmail.com',
+            'port': 465,
+            'timeout': 10,
+            'use_ssl': True,
+            'username': '3285240ira@gmail.com',
+            'password': 'cwbx nppf ouaq lxnb',
+        }
+    }
 }
+
+DEFAULT_FROM_EMAIL = 'TravelWay <3285240ira@gmail.com>'
+
+DEFAULT_FROM_EMAIL = os.environ.get(
+    'EMAIL_HOST_USER',
+    'noreply@travelway.local'
+)
 
 
 # Authentication
