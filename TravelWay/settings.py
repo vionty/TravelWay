@@ -156,13 +156,11 @@ MAILERS = {
             'port': 465,
             'timeout': 10,
             'use_ssl': True,
-            'username': '3285240ira@gmail.com',
-            'password': 'cwbx nppf ouaq lxnb',
+            'username': os.environ.get('EMAIL_HOST_USER'),
+            'password': os.environ.get('EMAIL_HOST_PASSWORD'),
         }
     }
 }
-
-DEFAULT_FROM_EMAIL = 'TravelWay <3285240ira@gmail.com>'
 
 DEFAULT_FROM_EMAIL = os.environ.get(
     'EMAIL_HOST_USER',
